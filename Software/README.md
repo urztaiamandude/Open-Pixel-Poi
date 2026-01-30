@@ -21,7 +21,7 @@ App use may require a poi [firmware update](https://mitchlol.github.io/#openpixe
 - Long press scan to proceed to app without any connections.
 - Long press a pattern to see it's size, or delete/flip/mirror it.
 - Selecting the ∞ pattern slot will trigger auto pattern looping.
-- Long press the app name on the patterns page to enter the secret [device settings](../Firmware/CONFIG.md) page.
+- Long press the app name on the patterns page to enter the secret [device settings](../docs/wiki/firmware/configuration.md) page.
 - The text pattern creation input only accepts capital letters.
 - When creating stacked patterns, be mindful of the widths, if the least common multiple is greater than 400, it will crop.
 - Buy a \$2000 macbook, a \$1000 iphone and a dev license to build the app for iOS.

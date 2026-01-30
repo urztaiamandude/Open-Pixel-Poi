@@ -1,0 +1,52 @@
+# Open Pixel Poi - 3D Printed Body
+
+## Main Body
+Print all the main body parts in **PLA** or any other rigid material. Slicer
+profiles such as layer height an infill are not important, just make sure you
+can do the overhangs. The individual body files have been pre-oriented so that
+no supports/brims/rafts/etc are required, see the section on orientation below
+to confirm your orientation. You need 1 of each part per poi, or 2 of each for
+a pair.
+###### Main body parts are:
+1. [Open Pixel Poi - Body - Top](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Body%20-%20Top.3mf>)
+1. [Open Pixel Poi - Body - Bottom](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Body%20-%20Bottom.3mf>)
+1. [Open Pixel Poi - Body - Button](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Body%20-%20Button.3mf>)
+
+## Outer Shell
+The outer shell must be printed in **Clear / Transparent TPU**. Ive included 3
+primary shell variants and a few more in the
+[Extras](./3d-printed-extras.md) page. For HD LED strips make sure to use the
+ones labeled "55 Pixel" to minimize diffusion. For 20 or 25 pixel led strips,
+the regular shells all work.
+
+The round shell should be mostly unaffected by infill, as it has thin walls
+and internal cavities to control diffusion. The hex shells look nice in 10%
+gyroid or 3d honeycomb. All shell files are preoriented and do not require any
+supports/brims/rafts/etc, see the section on orientation below to confirm your
+orientation. You need 1 shell per poi, so that means 2 shells for a pair. If
+you're undecided which shell you want, go with the round one.
+
+Update: I've started dumping more shell designs in the
+[Extras](./3d-printed-extras.md) page, including one with holes for the LEDs
+allowing it to be printed in any color TPU. However, the 2 options here are
+the best.
+###### Shells are:
+1. **Option 1:** [Open Pixel Poi - Shell - Hex](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Shell%20-%20Hex.3mf>)
+1. **Option 2:** [Open Pixel Poi - Shell - Round Diffused](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Shell%20-%20Round%20Diffused.3mf>)
+1. **Option 3:** [Open Pixel Poi - Shell - Hex - 55 Pixel](<https://github.com/Mitchlol/Open-Pixel-Poi/raw/refs/heads/main/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20Shell%20-%20Hex%20-%2055%20Pixel.3mf>)
+
+## Orientation
+The parts all print without supports when oriented like this. Take special
+note of orientation the bottom half of the body, the led groove is an
+overhang rather than requiring supports.
+![orientation](/Hardware/3D%20Printable%20Body/print_orientation.png)
+
+## All in one file
+Alternatively [Open Pixel Poi - All Parts In One File](/Hardware/3D%20Printable%20Body/Open%20Pixel%20Poi%20-%20All%20Parts%20In%20One%20File.3mf)
+contains all the parts of a single poi body. You will need to split the
+object to seperate out the parts, and orient them on your own.
+
+## Extras
+The [Extras](./3d-printed-extras.md) page contains more shell variants, shell
+caps, poi knobs, and whatever else seems relevant to upload. Nothing in this
+folder is required to have a functional poi, but it is worth having a look.
