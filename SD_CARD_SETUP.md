@@ -88,6 +88,48 @@ For highest throughput on a Teensy 4.1:
 If you are using the standard Arduino SD library, FAT32 is the safest
 filesystem choice, but it is usually slower than SdFat + exFAT on SDIO.
 
+## Teensy 4.1 SdFat checklist (firmware)
+This is a quick checklist for fast SD access on Teensy 4.1. Exact names
+may differ by SdFat version, so cross-check with your installed library.
+
+1) Use SdFat v2 and SDIO (built-in microSD slot)
+
+```cpp
+#include <SdFat.h>
+
+SdFs sd; // FAT + exFAT support
+
+void setup() {
+  Serial.begin(115200);
+  if (!sd.begin(SdioConfig(FIFO_SDIO))) {
+    sd.initErrorHalt(&Serial);
+  }
+}
+```
+
+2) Enable exFAT (if not already)
+- In SdFatConfig.h, set SDFAT_FILE_TYPE to 3 (FAT16/32 + exFAT).
+
+3) Pre-allocate large files to keep them contiguous
+
+```cpp
+FsFile file;
+const uint32_t bytes = 32UL * 1024UL * 1024UL; // 32 MiB
+if (!file.open("data.bin", O_RDWR | O_CREAT)) {
+  // handle error
+}
+if (!file.preAllocate(bytes)) {
+  // handle error
+}
+```
+
+4) Read/write in larger, aligned blocks
+- Use buffers that are multiples of 512 bytes (the SD sector size).
+- Avoid many tiny writes; batch them into bigger blocks.
+
+5) Keep directory structure shallow and file count low
+- Large sequential files are faster than lots of small files.
+
 ## Repeat for the second card
 Re-run the steps for the second card and use labels like
 OPP_PATTERNS_B.
