@@ -13,6 +13,7 @@ Open Pixel Poi
   <a href="./Hardware/3D Printable Body/README.md">3D Models</a>
   ·
   <a href="./Hardware/Assembly/README.md">Assembly</a>
+  <a href="./docs/wiki/README.md">Wiki</a>
   ·
   <a href="./Software/README.md">Mobile App</a>
   ·
