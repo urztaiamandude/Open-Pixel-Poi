@@ -2,16 +2,12 @@
 
 This guide prepares new 64GB microSDXC cards with:
 - a data partition for pattern and image files
-- an optional Linux swap partition for extra memory headroom
 
 It assumes a Linux host. If you are using another OS, use its partitioning
 tool and keep the same partition layout and labels.
 
 ## Recommended layout
-- Partition 1 (DATA): 56 GiB, exFAT (or FAT32 if your device requires it)
-- Partition 2 (SWAP): remaining space, Linux swap
-
-If you prefer a different split, adjust the sizes below.
+- Partition 1 (DATA): full card, exFAT (or FAT32 if your device requires it)
 
 ## Step 1: identify the card device
 Plug in the card and find its device path:
@@ -41,8 +37,7 @@ sudo wipefs -a "$DEV"
 ```bash
 sudo parted "$DEV" --script \
   mklabel gpt \
-  mkpart primary 1MiB 56GiB \
-  mkpart primary linux-swap 56GiB 100%
+  mkpart primary 1MiB 100%
 ```
 
 ## Step 4: format and label
@@ -51,14 +46,12 @@ After partitioning, confirm the new partition paths and set variables:
 ```bash
 lsblk -o NAME,SIZE,TYPE,MOUNTPOINT "$DEV"
 PART1=/dev/sdX1
-PART2=/dev/sdX2
 ```
 
 Use unique labels for each card (A, B) so they are easy to mount.
 
 ```bash
 sudo mkfs.exfat -n OPP_PATTERNS_A "$PART1"
-sudo mkswap -L OPP_SWAP_A "$PART2"
 ```
 
 If your device requires FAT32, use:
@@ -75,30 +68,19 @@ sudo mount /dev/disk/by-label/OPP_PATTERNS_A /mnt/opp-patterns
 mkdir -p /mnt/opp-patterns/patterns /mnt/opp-patterns/images
 ```
 
-## Step 6: enable swap (optional)
-
-```bash
-sudo swapon /dev/disk/by-label/OPP_SWAP_A
-swapon --show
-```
-
-To enable both automatically on boot, add entries to /etc/fstab
+To enable the mount automatically on boot, add an entry to /etc/fstab
 (adjust the mount point and filesystem type as needed):
 
 ```
 /dev/disk/by-label/OPP_PATTERNS_A /mnt/opp-patterns exfat defaults,uid=1000,gid=1000,umask=022 0 2
-/dev/disk/by-label/OPP_SWAP_A none swap sw 0 0
 ```
 
-## Notes on swap wear
-Swap on a microSD card is slower and adds write wear. If you only need
-occasional memory relief, keep swap small (2 to 4 GiB) and set a low
-swappiness value, for example:
-
-```bash
-sudo sysctl vm.swappiness=10
-```
+## Notes for Teensy data access
+Teensy firmware reads files through an SD library, so the filesystem must
+match what your firmware supports. If you are using the standard SD
+library, FAT32 is typically the safest choice. If you are using SdFat or
+another library that supports exFAT, exFAT is fine for 64GB cards.
 
 ## Repeat for the second card
 Re-run the steps for the second card and use labels like
-OPP_PATTERNS_B and OPP_SWAP_B.
+OPP_PATTERNS_B.
