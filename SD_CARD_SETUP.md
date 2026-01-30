@@ -1,4 +1,4 @@
-# microSD card setup (64GB) for patterns and swap
+# microSD card setup (64GB) for patterns and data
 
 This guide prepares new 64GB microSDXC cards with:
 - a data partition for pattern and image files
@@ -23,7 +23,7 @@ DEV=/dev/sdX
 ```
 
 If your system exposes the card as /dev/mmcblk1, partitions will be
-/dev/mmcblk1p1 and /dev/mmcblk1p2.
+/dev/mmcblk1p1.
 
 ## Step 2: wipe existing signatures
 This removes any old filesystem metadata.
@@ -54,7 +54,7 @@ Use unique labels for each card (A, B) so they are easy to mount.
 sudo mkfs.exfat -n OPP_PATTERNS_A "$PART1"
 ```
 
-If your device requires FAT32, use:
+If your device or library requires FAT32, use:
 
 ```bash
 sudo mkfs.fat -F 32 -n OPP_PATTERNS_A "$PART1"
@@ -75,11 +75,18 @@ To enable the mount automatically on boot, add an entry to /etc/fstab
 /dev/disk/by-label/OPP_PATTERNS_A /mnt/opp-patterns exfat defaults,uid=1000,gid=1000,umask=022 0 2
 ```
 
-## Notes for Teensy data access
-Teensy firmware reads files through an SD library, so the filesystem must
-match what your firmware supports. If you are using the standard SD
-library, FAT32 is typically the safest choice. If you are using SdFat or
-another library that supports exFAT, exFAT is fine for 64GB cards.
+## Teensy 4.1 fast-path notes
+For highest throughput on a Teensy 4.1:
+
+- Use the built-in microSD slot (SDIO, 4-bit) rather than SPI.
+- Use the SdFat library with exFAT enabled for SDXC cards.
+- Keep files contiguous (pre-allocate or create contiguous files in code).
+- Use a shallow directory structure and fewer small files.
+- If your formatter lets you choose allocation unit size, 128 KiB is a good
+  starting point for large sequential reads/writes on 64GB cards.
+
+If you are using the standard Arduino SD library, FAT32 is the safest
+filesystem choice, but it is usually slower than SdFat + exFAT on SDIO.
 
 ## Repeat for the second card
 Re-run the steps for the second card and use labels like
